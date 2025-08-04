@@ -154,7 +154,7 @@ TO BE
 
 # Задание 5. Работа с docker и docker-compose
 
-[реализовано приложение тестирования доступности модуля по его IP](architecture-warmhouse-main/apps/smart_home/services/net_module_ping.py)
+[реализовано приложение тестирования доступности модуля по его IP](/apps/smart_home/services/net_module_ping.py)
 запуск в тест: /usr/local/bin/python3 /architecture-warmhouse-main/apps/smart_home/services/net_module_ping.py" 192.168.0.1
  
 
