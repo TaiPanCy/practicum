@@ -1,0 +1,84 @@
+@startuml ER-диаграмма WarmHouse
+
+' Сущности
+entity "user" as user {
+  *user_id : integer <<generated>>
+  *username : varchar(50)
+  *usertype : varchar(50)  <<FK>>
+  agreement_no : varchar(10)
+  password_hash : varchar(255)
+  created_at : timestamp
+}
+
+entity "user_type" as user_type {
+  *usertype : varchar(50)
+  allow_add_module : boolean
+  allow_change_module : boolean
+  allow_drop_module : boolean
+  allow_add_house : boolean
+  allow_change_house : boolean
+  allow_drop_house : boolean  
+  allow_add_location : boolean
+  allow_change_location : boolean
+  allow_drop_location : boolean
+}
+
+
+entity "house" as house {
+  *house_id : integer <<generated>>
+  *user_id : integer
+  --
+  *housename : varchar(50)
+  created_at : timestamp
+}
+
+entity "location" as location {
+  *house_id : integer <<FK>>
+  *location_id : integer <<generated>>
+  --
+  *location_name : varchar(50)
+  created_at : timestamp
+}
+
+entity "module" as module {
+  *module_id : integer <<generated>>
+  --
+  *name : varchar(50)
+  *module_type_id : integer <<FK>>
+  *location_id : integer <<FK>>
+  *serial  : varchar(32)
+  *created_at : timestamp
+  updated_at : timestamp
+}
+
+entity "moduleType" as moduleType {
+  *module_type_id : integer <<generated>>
+  --
+  *name : varchar(100)
+  description : text
+}
+
+entity "log" as log {
+  module_id : integer <<FK>>
+  log_type : integer <<FK>>
+  last_value : float
+  status : varchar(20)
+  updated_at : timestamp
+}
+
+entity "log_type" as log_type {
+  *log_type_id : integer <<generated>>
+  --
+   *name : varchar(100)
+  description : text
+}
+
+'Связи
+user  }o--||user_type : "выбирает из"
+user ||--o{ house : "владеет"
+house ||--o{ location : "владеет"
+location ||--o{ module : "содержит"
+module ||--o{ moduleType : "имеет"
+module  }o--o{ log : "выбирает из"
+log  }o--|| log_type : "выбирает из"
+@enduml

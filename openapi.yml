@@ -1,0 +1,503 @@
+openapi: 3.0.0
+info:
+  title: Умный дом API
+  description: API для управления умным домом, включая управление домами, локациями, модулями и событиями.
+  version: 1.0.0
+servers:
+  - url: http://localhost:8080/api
+    description: WarmHouse server
+
+# Определения ресурсов
+paths:
+  # Ресурс: Пользователи
+  /users:
+    get:
+      summary: Список пользователей
+      description: Возвращает список всех пользователей.
+      responses:
+        '200':
+          description: Успешный список пользователей
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserList'
+    post:
+      summary: Добавить пользователя
+      description: Создает нового пользователя.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '201':
+          description: Пользователь успешно добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    delete:
+      summary: Удалить пользователя
+      description: Удаляет пользователя.
+      responses:
+        '202':
+          description: Пользователь Удален
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+    patch:
+      summary: Изменить права пользователя
+      description: Изменяет права пользователя.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+      responses:
+        '203':
+          description: Права пользователя изменены
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+
+  # Ресурс: Типы пользователей
+  /user_type:
+    get:
+      summary: Список типов
+      description: Возвращает список всех типов пользователей.
+      responses:
+        '200':
+          description: Успешный список типов пользователей
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserTypeList'
+    post:
+      summary: Добавить тип пользователя
+      description: Создает новый тип пользователя.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User_type'
+      responses:
+        '201':
+          description: тип пользователя успешно добавлен
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/User_type'
+    delete:
+      summary: Удалить тип пользователя
+      description: Удаляет тип пользователя.
+      responses:
+        '202':
+          description: тип пользователя Удален
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/User_type'
+
+  # Ресурс: Дом
+  /houses:
+    get:
+      summary: Список домов
+      description: Возвращает список всех домов.
+      responses:
+        '200':
+          description: Успешный список домов
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HouseList'
+    post:
+      summary: Добавить дом
+      description: Создает новый дом.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/House'
+      responses:
+        '201':
+          description: Дом успешно добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+    delete:
+      summary: Удалить дом
+      description: Удаляет дом.
+      responses:
+        '202':
+          description: Дом Удален
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/House'
+
+  # Ресурс: Локации
+  /locations:
+    get:
+      summary: Список локаций
+      description: Возвращает список всех локаций.
+      responses:
+        '200':
+          description: Успешный список локаций
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LocationList'
+    post:
+      summary: Добавить локацию
+      description: Создает новую локацию в доме.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Location'
+      responses:
+        '201':
+          description: Локация успешно добавлена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+    delete:
+      summary: Удалить локацию
+      description: Удаляет локацию.
+      responses:
+        '202':
+          description: Локация Удалена
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Location'
+
+  # Ресурс: Модули
+  /modules:
+    get:
+      summary: Список модулей
+      description: Возвращает список всех модулей и их значений.
+      responses:
+        '200':
+          description: Успешный список модулей
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleList'
+    post:
+      summary: Добавить модуль 
+      description: Создает новый модуль.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Module'
+      responses:
+        '201':
+          description: Модуль успешно добавлен
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Module'
+    delete:
+      summary: Удалить модуль
+      description: Удаляет модуль .
+      responses:
+        '202':
+          description: Модуль Удален
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Module'
+    patch:
+      summary: Изменить значение модуля
+      description: Изменяет значение модуля (значение, локация и т.д).
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+                $ref: '#/components/schemas/Module'
+      responses:
+        '203':
+          description: Значение модуля изменено
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Module'
+
+  # Ресурс: Типы модулей
+  /ModuleType:
+    get:
+      summary: Список типов
+      description: Возвращает список всех типов модулей.
+      responses:
+        '200':
+          description: Успешный список типов модулей
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ModuleTypeList'
+    post:
+      summary: Добавить тип пользователя
+      description: Создает новый тип модуля.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ModuleType'
+      responses:
+        '201':
+          description: тип модуля успешно добавлен
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/ModuleType'
+    delete:
+      summary: Удалить тип модуля
+      description: Удаляет тип модуля.
+      responses:
+        '202':
+          description: тип модуля Удален
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/ModuleType'
+
+  # Ресурс: Логи
+  /logs:
+    get:
+      summary: Список событий в логах по модулю
+      description: Возвращает список событий из логов по модулю.
+      responses:
+        '200':
+          description: Успешный список событий
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogList'
+    post:
+      summary: записать событие в лог
+      description: записывает событие в лог.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Log'
+      responses:
+        '201':
+          description: событие успешно добавлено
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/Log'
+
+  # Ресурс: Типы событий
+  /LogType:
+    get:
+      summary: Список типов
+      description: Возвращает список всех типов событий.
+      responses:
+        '200':
+          description: Успешный список типов модулей
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LogTypeList'
+    post:
+      summary: Добавить тип событий
+      description: Создает новый тип событий.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LogType'
+      responses:
+        '201':
+          description: тип события успешно добавлен
+          content:
+            application/json:
+              schema:
+               $ref: '#/components/schemas/LogType'
+    delete:
+      summary: Удалить тип события
+      description: Удаляет тип события.
+      responses:
+        '202':
+          description: тип события Удален
+          content:
+            application/json:
+              schema:
+                 $ref: '#/components/schemas/LogType'
+
+# Определения схем
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+        username:
+          type: string
+        usertype:
+          type: string
+        agreement_no:
+          type: string
+        password_hash:
+          type: string
+        created_at:
+          type: string
+
+    UserList:
+      type: array
+      items:
+        $ref: '#/components/schemas/User'
+
+    UserTypeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/User_type'
+
+    User_type:
+      type: object
+      properties:
+        usertype:
+          type: string
+        allow_add_module:
+          type: boolean
+        allow_change_module:
+          type: boolean
+        allow_drop_module:
+          type: boolean
+        allow_add_house:
+          type: boolean
+        allow_change_house:
+          type: boolean
+        allow_drop_house:
+          type: boolean
+        allow_add_location:
+          type: boolean
+        allow_change_location:
+          type: boolean
+        allow_drop_location:
+          type: boolean
+
+    House:
+      type: object
+      properties:
+        house_id:
+          type: integer
+        user_id:
+          type: integer
+        housename:
+          type: string
+        created_at:
+          type: string
+
+    HouseList:
+      type: array
+      items:
+        $ref: '#/components/schemas/House'
+
+    Location:
+      type: object
+      properties:
+        house_id:
+          type: integer
+        location_id:
+          type: integer
+        location_name:
+          type: string
+        created_at:
+          type: string
+
+    LocationList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Location'
+
+    Module:
+      type: object
+      properties:
+        module_id:
+          type: integer
+        name:
+          type: string
+        module_type_id:
+          type: integer
+        location_id:
+          type: integer
+        serial:
+          type: string
+        created_at:
+          type: string
+        updated_at:
+          type: string
+
+    ModuleList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Module'
+
+    ModuleType:
+      type: object
+      properties:
+        module_type_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+
+    ModuleTypeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/ModuleType'
+
+    Log:
+      type: object
+      properties:
+        module_id:
+          type: integer
+        log_type:
+          type: string
+        last_value:
+          type: string
+        status:
+          type: string
+        updated_at:
+          type: string
+
+    LogList:
+      type: array
+      items:
+        $ref: '#/components/schemas/Log'
+
+    LogType:
+      type: object
+      properties:
+        log_type_id:
+          type: integer
+        name:
+          type: string
+        description:
+          type: string
+
+    LogTypeList:
+      type: array
+      items:
+        $ref: '#/components/schemas/LogType'
