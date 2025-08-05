@@ -1,0 +1,19 @@
+@startuml
+title warmhouse Context Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+Person(user, "Клиент компании", "Пользователь")
+Person(admin, "Администратор", "Работник подключающий модули к системе")
+
+System(WarmHouseCore, "WarmHouseCore", "Управляет и мониторит модули, обновляет информацию с них. Взаимодействует с БД.")
+
+System_Ext(api, "API модулей температуры", "Получение информации об изменении температуры на модулях")
+
+Rel(user, WarmHouseCore,"Использует систему для для получения информации с модулей или по локации через Web приложение")
+Rel(admin,WarmHouseCore,"Подключает датчики к системе и настраивает их")
+Rel(WarmHouseCore,api,"Собирает информацию по обновлениям статуса модуля температуры")
+
+@enduml

@@ -1,0 +1,41 @@
+@startuml
+
+title WarmHouseSystem Module Registration Controller Code Diagram
+
+top to bottom direction
+
+!includeurl https://raw.githubusercontent.com/RicardoNiepel/C4-PlantUML/master/C4_Component.puml
+
+class PingModule {
+  + Type: ModuleType
+  + IP: string
+    +void net_module_ping()
+    +void write_module_log_to_log()
+}
+
+class Module {
+  + ID: int
+  + Name: string
+  + Type: ModuleType
+  + Location: string
+  + Value: float64
+  + IP: string
+  + Unit: string
+  + Status: string
+  + LastUpdated: time.Time
+  + CreatedAt: time.Time
+  + sensorAPIConnectionAdress: json
+}
+
+  class ModuleType <<enum>> {
+    + TEMPERATURE
+    + HUMIDITY
+    + PRESSURE
+    + GATE
+    + LAMP
+  }
+
+    Module --> ModuleType : "содержит"
+    PingModule --> Module : "содержит"
+
+@enduml
